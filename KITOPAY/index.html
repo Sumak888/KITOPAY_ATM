@@ -1,0 +1,234 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>KITOPAY - Cajero Automático</title>
+  <!-- Enlace a la hoja de estilos general -->
+  <link rel="stylesheet" href="style.css">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700&display=swap" rel="stylesheet">
+  
+  <!-- Librerías externas para EmailJS, manejo de Excel y gráficos estadísticos -->
+  <script type="text/javascript" src="https://cdn.jsdelivr.net/npm/@emailjs/browser@3/dist/email.min.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/xlsx@0.18.5/dist/xlsx.full.min.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+</head>
+<body>
+
+  <!-- Contenedor principal de la interfaz del cajero automático -->
+  <div class="atm-main-wrapper">
+    
+    <!-- Cabecera institucional del banco -->
+    <header class="atm-header">
+      <div class="brand-group">
+        <img src="images/logobanco.jpg" alt="KITOPAY Logo" class="app-logo">
+        <h1>KITOPAY ATM</h1>
+      </div>
+      <div class="cosede-badge">
+        <img src="images/cosede.png" alt="Garantía COSEDE" class="cosede-logo">
+      </div>
+    </header>
+
+    <!-- Sección de bloqueo por falta de efectivo o mantenimiento -->
+    <div id="seccion-fuera-servicio" class="seccion-atm hidden">
+      <div class="atm-split-layout">
+        <div class="video-container-left-clean">
+          <video autoplay loop controls muted class="atm-video-fullscreen">
+            <source src="video/mantenimiento.mp4" type="video/mp4">
+          </video>
+        </div>
+        <div class="panel-right-action">
+          <h2>MANTENIMIENTO</h2>
+          <p class="panel-subtitle">Ingrese PIN de administrador:</p>
+          <input type="password" id="input-admin-maintenance" class="atm-input-display" placeholder="PIN" readonly>
+          <div class="keypad-grid">
+            <button class="key-btn" onclick="digitarNumpad('input-admin-maintenance', '1')">1</button>
+            <button class="key-btn" onclick="digitarNumpad('input-admin-maintenance', '2')">2</button>
+            <button class="key-btn" onclick="digitarNumpad('input-admin-maintenance', '3')">3</button>
+            <button class="key-btn" onclick="digitarNumpad('input-admin-maintenance', '4')">4</button>
+            <button class="key-btn" onclick="digitarNumpad('input-admin-maintenance', '5')">5</button>
+            <button class="key-btn" onclick="digitarNumpad('input-admin-maintenance', '6')">6</button>
+            <button class="key-btn" onclick="digitarNumpad('input-admin-maintenance', '7')">7</button>
+            <button class="key-btn" onclick="digitarNumpad('input-admin-maintenance', '8')">8</button>
+            <button class="key-btn" onclick="digitarNumpad('input-admin-maintenance', '9')">9</button>
+            <button class="key-btn key-clear" onclick="borrarNumpad('input-admin-maintenance')">BORRAR</button>
+            <button class="key-btn" onclick="digitarNumpad('input-admin-maintenance', '0')">0</button>
+            <button class="key-btn key-submit" onclick="validarAdminMaintenance()">ENTRAR</button>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Sección de identificación inicial del cliente mediante número de cédula -->
+    <div id="seccion-login" class="seccion-atm">
+      <div class="atm-split-layout">
+        <div class="video-container-left-clean">
+          <video autoplay loop controls muted class="atm-video-fullscreen">
+            <source src="video/login.mp4" type="video/mp4">
+          </video>
+        </div>
+        <div class="panel-right-action">
+          <h2>IDENTIFICACIÓN</h2>
+          <p class="panel-subtitle">Ingrese su número de cédula:</p>
+          <input type="text" id="login-cedula" class="atm-input-display" placeholder="Cédula / PIN" readonly>
+          <div class="keypad-grid">
+            <button class="key-btn" onclick="digitarNumpad('login-cedula', '1')">1</button>
+            <button class="key-btn" onclick="digitarNumpad('login-cedula', '2')">2</button>
+            <button class="key-btn" onclick="digitarNumpad('login-cedula', '3')">3</button>
+            <button class="key-btn" onclick="digitarNumpad('login-cedula', '4')">4</button>
+            <button class="key-btn" onclick="digitarNumpad('login-cedula', '5')">5</button>
+            <button class="key-btn" onclick="digitarNumpad('login-cedula', '6')">6</button>
+            <button class="key-btn" onclick="digitarNumpad('login-cedula', '7')">7</button>
+            <button class="key-btn" onclick="digitarNumpad('login-cedula', '8')">8</button>
+            <button class="key-btn" onclick="digitarNumpad('login-cedula', '9')">9</button>
+            <button class="key-btn key-clear" onclick="borrarNumpad('login-cedula')">BORRAR</button>
+            <button class="key-btn" onclick="digitarNumpad('login-cedula', '0')">0</button>
+            <button class="key-btn key-submit" onclick="solicitarOTPCedula()">CONTINUAR</button>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Sección para la validación del código OTP de seguridad -->
+    <div id="seccion-otp" class="seccion-atm hidden">
+      <div class="panel-center-standalone">
+        <h2>VALIDACIÓN OTP</h2>
+        <p class="panel-subtitle">Ingrese el código de 6 dígitos enviado a su correo:</p>
+        <input type="text" id="input-otp" class="atm-input-display" placeholder="000000" readonly>
+        <div class="keypad-grid" style="max-width: 320px; margin: 0 auto;">
+          <button class="key-btn" onclick="digitarNumpad('input-otp', '1')">1</button>
+          <button class="key-btn" onclick="digitarNumpad('input-otp', '2')">2</button>
+          <button class="key-btn" onclick="digitarNumpad('input-otp', '3')">3</button>
+          <button class="key-btn" onclick="digitarNumpad('input-otp', '4')">4</button>
+          <button class="key-btn" onclick="digitarNumpad('input-otp', '5')">5</button>
+          <button class="key-btn" onclick="digitarNumpad('input-otp', '6')">6</button>
+          <button class="key-btn" onclick="digitarNumpad('input-otp', '7')">7</button>
+          <button class="key-btn" onclick="digitarNumpad('input-otp', '8')">8</button>
+          <button class="key-btn" onclick="digitarNumpad('input-otp', '9')">9</button>
+          <button class="key-btn key-clear" onclick="borrarNumpad('input-otp')">BORRAR</button>
+          <button class="key-btn" onclick="digitarNumpad('input-otp', '0')">0</button>
+          <button class="key-btn key-submit" onclick="verificarOTP()">VALIDAR</button>
+        </div>
+      </div>
+    </div>
+
+    <!-- Menú principal de transacciones del cliente autenticado -->
+    <div id="seccion-menu-cliente" class="seccion-atm hidden">
+      <div class="atm-screen-layout">
+        <div class="side-buttons left-buttons">
+          <button onclick="seleccionarOperacion('retiro')" class="atm-side-btn">RETIROS</button>
+          <button onclick="seleccionarOperacion('deposito')" class="atm-side-btn">DEPÓSITOS</button>
+          <button onclick="consultarSaldo()" class="atm-side-btn" style="background: #0284c7;">SALDO</button>
+        </div>
+
+        <div class="center-display-interactive">
+          <div id="panel-publicidad-client" class="center-view-content">
+            <h2 style="margin-bottom: 5px;">BIENVENIDO, <span id="cliente-nombre">CLIENTE</span></h2>
+            <p class="panel-subtitle" style="margin-bottom: 10px;">Seleccione una opción lateral para interactuar</p>
+            <div class="large-video-wrapper">
+              <video autoplay loop controls muted class="atm-video-fullscreen">
+                <source src="video/videobanco.mp4" type="video/mp4">
+              </video>
+            </div>
+          </div>
+
+          <div id="area-transaccion" class="hidden transaction-active-box">
+            <h3 id="titulo-operacion" class="trans-title">OPERACIÓN</h3>
+            <div id="paso-formulario-container"></div>
+          </div>
+        </div>
+
+        <div class="side-buttons right-buttons">
+          <button onclick="seleccionarOperacion('transferencia')" class="atm-side-btn">TRANSFERENCIAS</button>
+          <button onclick="seleccionarOperacion('cheque')" class="atm-side-btn">DEP. CHEQUES</button>
+          <button onclick="cerrarSesion()" class="atm-side-btn btn-exit-session">SALIR</button>
+        </div>
+      </div>
+    </div>
+
+    <!-- Panel de control administrativo para gestión de base de datos y efectivo -->
+    <div id="seccion-admin" class="seccion-atm hidden">
+      <div class="admin-compact-container">
+        <h2>PANEL ADMINISTRATIVO</h2>
+        
+        <div class="admin-grid-compact">
+          <div class="admin-card-item">
+            <h4>GESTIÓN DE BASE DE DATOS</h4>
+            <div class="admin-file-row">
+              <input type="file" id="excel-file-input" accept=".xlsx, .xls">
+              <button type="button" onclick="importarExcel()" class="btn-adm-primary">IMPORTAR</button>
+              <button type="button" onclick="exportarExcel()" class="btn-adm-outline">EXPORTAR</button>
+            </div>
+          </div>
+
+          <div class="admin-card-item">
+            <h4>RECARGAR BILLETES FÍSICOS</h4>
+            <div class="billetes-admin-summary">
+              <span>$20: <strong id="stock-b20">25</strong></span>
+              <span>$10: <strong id="stock-b10">40</strong></span>
+              <span>$5: <strong id="stock-b5">40</strong></span>
+            </div>
+            <div class="admin-cash-row" style="margin-top: 8px;">
+              <span class="cash-display">$<span id="efectivo-cajero-display">1000.00</span></span>
+            </div>
+            <div class="admin-recarga-billetes" style="margin-top: 6px; display: flex; gap: 4px;">
+              <input type="number" id="recarga-b20" placeholder="Cant $20" style="width: 32%;">
+              <input type="number" id="recarga-b10" placeholder="Cant $10" style="width: 32%;">
+              <input type="number" id="recarga-b5" placeholder="Cant $5" style="width: 32%;">
+            </div>
+            <button onclick="rellenarCajeroBilletes()" class="btn-adm-primary w-100" style="margin-top: 6px;">RECARGAR CAJERO</button>
+          </div>
+        </div>
+
+        <div class="admin-card-item" style="margin-top: 10px;">
+          <h4>PROYECCIÓN DE FLUJO</h4>
+          <div class="chart-box-compact">
+            <canvas id="graficaEfectivoCanvas"></canvas>
+          </div>
+          <p id="proyeccion-agotamiento" class="txt-resultado-admin"></p>
+        </div>
+
+        <div class="admin-card-item" style="margin-top: 10px;">
+          <div class="admin-table-header">
+            <h4>REGISTRO DE CLIENTES</h4>
+            <button type="button" onclick="limpiarMemoria()" class="btn-adm-danger">BORRAR</button>
+          </div>
+          <div class="table-scroll-container">
+            <table>
+              <thead>
+                <tr>
+                  <th>CÉDULA</th>
+                  <th>NOMBRE COMPLETO</th>
+                  <th>CORREO ELECTRÓNICO</th>
+                  <th>SALDO ($)</th>
+                </tr>
+              </thead>
+              <tbody id="tabla-body">
+                <tr><td colspan="4" style="text-align: center;">Sin registros. Importe un archivo Excel.</td></tr>
+              </tbody>
+            </table>
+          </div>
+        </div>
+
+        <button onclick="cerrarSesion()" class="btn-adm-danger w-100" style="margin-top: 12px;">CERRAR SESIÓN</button>
+      </div>
+    </div>
+
+    <!-- Pie de página con el banner legal de garantía COSEDE -->
+    <footer class="atm-footer">
+      <div class="cosede-legal-banner">
+        <img src="images/cosede.png" alt="COSEDE Logo" class="cosede-small-logo">
+        <span>Sus depósitos en esta entidad están cubiertos por el Seguro de Depósitos de la <strong>COSEDE</strong>.</span>
+      </div>
+    </footer>
+
+  </div>
+
+  <!-- Inclusión de los módulos de JavaScript modularizados en el proyecto -->
+  <script src="config-emailjs.js"></script>
+  <script src="auth.js"></script>
+  <script src="transactions.js"></script>
+  <script src="admin.js"></script>
+</body>
+</html>
