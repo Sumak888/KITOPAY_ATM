@@ -1,0 +1,488 @@
+:root {
+  --bg-app: #f8fafc;
+  --atm-card-bg: #ffffff;
+  --banco-navy: #0f1e36;
+  --banco-blue: #1d4ed8;
+  --banco-accent: #00b4d8;
+  --text-main: #1e293b;
+  --text-muted: #64748b;
+  --border-color: #cbd5e1;
+  --danger: #ef4444;
+  --success: #16a34a;
+}
+
+body {
+  background-color: var(--bg-app);
+  font-family: 'Plus Jakarta Sans', sans-serif;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  min-height: 100vh;
+  margin: 0;
+  color: var(--text-main);
+}
+
+.atm-main-wrapper {
+  width: 100%;
+  max-width: 1200px;
+  background: var(--atm-card-bg);
+  border: 1px solid var(--border-color);
+  border-radius: 16px;
+  box-shadow: 0 10px 30px rgba(15, 30, 54, 0.08);
+  padding: 24px;
+  box-sizing: border-box;
+}
+
+.atm-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  border-bottom: 2px solid #e2e8f0;
+  padding-bottom: 12px;
+  margin-bottom: 20px;
+}
+
+.brand-group {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+}
+
+.brand-group h1 {
+  font-size: 1.4rem;
+  color: var(--banco-navy);
+  margin: 0;
+  font-weight: 700;
+}
+
+.app-logo { height: 42px; border-radius: 6px; }
+.cosede-logo { height: 38px; object-fit: contain; }
+.hidden { display: none !important; }
+
+.atm-split-layout {
+  display: flex;
+  gap: 24px;
+  align-items: stretch;
+  justify-content: space-between;
+}
+
+.video-container-left-clean {
+  flex: 1.4;
+  background: #000000;
+  padding: 0;
+  border-radius: 12px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  overflow: hidden;
+  border: 1px solid var(--border-color);
+  height: 100%;
+}
+
+.atm-video-fullscreen {
+  width: 100%;
+  height: 100%;
+  min-height: 380px;
+  border-radius: 8px;
+  object-fit: cover;
+}
+
+.panel-right-action {
+  flex: 1;
+  background: #f8fafc;
+  border: 1px solid var(--border-color);
+  padding: 24px;
+  border-radius: 12px;
+  text-align: center;
+}
+
+.panel-center-standalone {
+  max-width: 480px;
+  margin: 0 auto;
+  background: #f8fafc;
+  border: 1px solid var(--border-color);
+  padding: 30px;
+  border-radius: 12px;
+  text-align: center;
+}
+
+h2 {
+  color: var(--banco-navy);
+  margin-top: 0;
+  margin-bottom: 8px;
+  font-size: 1.3rem;
+}
+
+.panel-subtitle {
+  color: var(--text-muted);
+  font-size: 0.85rem;
+  margin-bottom: 16px;
+}
+
+.atm-input-display {
+  width: 100%;
+  padding: 12px;
+  font-size: 1.2rem;
+  text-align: center;
+  border-radius: 8px;
+  border: 1px solid var(--border-color);
+  background: #ffffff;
+  color: var(--text-main);
+  margin-bottom: 16px;
+  box-sizing: border-box;
+}
+
+.keypad-grid {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 10px;
+  max-width: 290px;
+  margin: 0 auto;
+}
+
+.key-btn {
+  width: 100%;
+  height: 52px;
+  background: #ffffff;
+  color: var(--banco-navy);
+  border: 1px solid var(--border-color);
+  font-size: 1.1rem;
+  font-weight: 700;
+  border-radius: 8px;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  transition: all 0.15s ease;
+  box-shadow: 0 2px 4px rgba(0,0,0,0.02);
+}
+
+.key-btn:hover {
+  background: #f1f5f9;
+  border-color: var(--banco-accent);
+}
+
+.key-clear {
+  background: #ffeeec !important;
+  color: var(--danger) !important;
+  border-color: #fca5a5 !important;
+  font-size: 0.85rem;
+}
+
+.key-submit {
+  background: #eff6ff !important;
+  color: var(--banco-blue) !important;
+  border-color: #93c5fd !important;
+  font-size: 0.85rem;
+}
+
+.atm-screen-layout {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  gap: 16px;
+}
+
+.center-display-interactive {
+  flex-grow: 1;
+  background: #f8fafc;
+  border: 1px solid var(--border-color);
+  border-radius: 12px;
+  padding: 20px;
+  min-height: 420px;
+  text-align: center;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+}
+
+.center-view-content {
+  width: 100%;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+.large-video-wrapper {
+  width: 100%;
+  max-width: 560px;
+  height: 290px;
+  border-radius: 8px;
+  overflow: hidden;
+  border: 1px solid var(--border-color);
+  margin-top: 10px;
+}
+
+.side-buttons {
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+}
+
+.atm-side-btn {
+  background: var(--banco-navy);
+  color: white;
+  border: none;
+  padding: 16px 18px;
+  font-weight: 600;
+  font-size: 0.8rem;
+  border-radius: 8px;
+  cursor: pointer;
+  transition: background 0.2s;
+  letter-spacing: 0.5px;
+  width: 150px;
+  text-align: center;
+}
+
+.atm-side-btn:hover { background: var(--banco-blue); }
+.btn-exit-session { background: var(--danger); }
+
+.transaction-active-box {
+  width: 100%;
+  max-width: 480px;
+}
+
+.trans-title {
+  color: var(--banco-navy);
+  font-size: 1.1rem;
+  margin-bottom: 10px;
+}
+
+.atm-text-input {
+  width: 100%;
+  padding: 12px;
+  font-size: 1.1rem;
+  border-radius: 8px;
+  border: 1px solid var(--border-color);
+  background: #ffffff;
+  margin-bottom: 12px;
+  box-sizing: border-box;
+  text-align: center;
+}
+
+.trans-buttons-row {
+  display: flex;
+  gap: 10px;
+  margin-top: 10px;
+}
+
+.btn-action-execute {
+  flex: 1;
+  background: var(--success);
+  color: white;
+  border: none;
+  padding: 12px;
+  font-weight: 600;
+  border-radius: 8px;
+  cursor: pointer;
+}
+
+.btn-action-cancel {
+  flex: 1;
+  background: #e2e8f0;
+  color: var(--text-main);
+  border: none;
+  padding: 12px;
+  font-weight: 600;
+  border-radius: 8px;
+  cursor: pointer;
+}
+
+.saldo-privacy-container {
+  background: #ffffff;
+  border: 1px solid var(--border-color);
+  padding: 20px;
+  border-radius: 10px;
+  margin: 15px auto;
+  width: 100%;
+  max-width: 350px;
+  text-align: center;
+}
+
+.saldo-privacy-container span {
+  font-size: 0.8rem;
+  color: var(--text-muted);
+  display: block;
+  margin-bottom: 6px;
+}
+
+.saldo-display-row {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 12px;
+}
+
+.saldo-display-row h3 {
+  font-size: 1.8rem;
+  color: var(--banco-blue);
+  margin: 0;
+}
+
+.btn-eye-toggle {
+  background: #f1f5f9;
+  border: 1px solid var(--border-color);
+  padding: 6px 12px;
+  border-radius: 6px;
+  cursor: pointer;
+  font-size: 0.85rem;
+  font-weight: 600;
+  color: var(--banco-navy);
+}
+
+.admin-compact-container {
+  max-width: 950px;
+  margin: 0 auto;
+}
+
+.admin-grid-compact {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 12px;
+}
+
+.admin-card-item {
+  background: #f8fafc;
+  border: 1px solid var(--border-color);
+  padding: 12px;
+  border-radius: 8px;
+}
+
+.admin-card-item h4 {
+  margin: 0 0 6px 0;
+  font-size: 0.85rem;
+  color: var(--banco-navy);
+}
+
+.admin-file-row, .admin-cash-row {
+  display: flex;
+  gap: 8px;
+  align-items: center;
+}
+
+.admin-cash-row input {
+  max-width: 90px;
+  padding: 6px;
+  text-align: center;
+  border: 1px solid var(--border-color);
+  border-radius: 6px;
+}
+
+.cash-display {
+  font-size: 1.1rem;
+  font-weight: 700;
+  color: var(--banco-blue);
+  flex-grow: 1;
+}
+
+.billetes-admin-summary {
+  display: flex;
+  justify-content: space-around;
+  background: #ffffff;
+  padding: 6px;
+  border-radius: 6px;
+  border: 1px solid var(--border-color);
+  font-size: 0.85rem;
+}
+
+.btn-adm-primary {
+  background: var(--banco-blue);
+  color: white;
+  border: none;
+  padding: 6px 10px;
+  border-radius: 6px;
+  font-weight: 600;
+  cursor: pointer;
+  font-size: 0.8rem;
+}
+
+.btn-adm-outline {
+  background: transparent;
+  border: 1px solid var(--border-color);
+  color: var(--text-main);
+  padding: 6px 10px;
+  border-radius: 6px;
+  font-weight: 600;
+  cursor: pointer;
+  font-size: 0.8rem;
+}
+
+.btn-adm-danger {
+  background: var(--danger);
+  color: white;
+  border: none;
+  padding: 6px 10px;
+  border-radius: 6px;
+  font-weight: 600;
+  cursor: pointer;
+  font-size: 0.8rem;
+}
+
+.chart-box-compact {
+  position: relative;
+  height: 130px;
+  width: 100%;
+}
+
+.txt-resultado-admin {
+  font-size: 0.8rem;
+  color: var(--text-muted);
+  margin: 4px 0 0 0;
+}
+
+.admin-table-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 4px;
+}
+
+.table-scroll-container {
+  max-height: 110px;
+  overflow-y: auto;
+  border: 1px solid var(--border-color);
+  border-radius: 6px;
+  background: #ffffff;
+}
+
+table {
+  width: 100%;
+  border-collapse: collapse;
+  text-align: left;
+  font-size: 0.78rem;
+}
+
+th, td {
+  padding: 5px 6px;
+  border-bottom: 1px solid #e2e8f0;
+}
+
+th {
+  background: #f1f5f9;
+  color: var(--banco-navy);
+  position: sticky;
+  top: 0;
+}
+
+.w-100 { width: 100%; }
+
+.atm-footer {
+  margin-top: 16px;
+  border-top: 1px solid #e2e8f0;
+  padding-top: 8px;
+}
+
+.cosede-legal-banner {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 10px;
+  font-size: 0.75rem;
+  color: var(--text-muted);
+}
+
+.cosede-small-logo {
+  height: 16px;
+  object-fit: contain;
+}
