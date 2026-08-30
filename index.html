@@ -29,6 +29,7 @@
         <img src="images/cosede.png" alt="Garantía COSEDE" class="cosede-logo">
       </div>
     </header>
+
     <!-- Sección de bloqueo por falta de efectivo o mantenimiento -->
     <div id="seccion-fuera-servicio" class="seccion-atm hidden">
       <div class="atm-split-layout">
@@ -146,7 +147,88 @@
       </div>
     </div>
 
+    <!-- Panel de control administrativo para gestión de base de datos y efectivo -->
+    <div id="seccion-admin" class="seccion-atm hidden">
+      <div class="admin-compact-container">
+        <h2>PANEL ADMINISTRATIVO</h2>
+        
+        <div class="admin-grid-compact">
+          <div class="admin-card-item">
+            <h4>GESTIÓN DE BASE DE DATOS</h4>
+            <div class="admin-file-row">
+              <input type="file" id="excel-file-input" accept=".xlsx, .xls">
+              <button type="button" onclick="importarExcel()" class="btn-adm-primary">IMPORTAR</button>
+              <button type="button" onclick="exportarExcel()" class="btn-adm-outline">EXPORTAR</button>
+            </div>
+          </div>
+
+          <div class="admin-card-item">
+            <h4>RECARGAR BILLETES FÍSICOS</h4>
+            <div class="billetes-admin-summary">
+              <span>$20: <strong id="stock-b20">25</strong></span>
+              <span>$10: <strong id="stock-b10">40</strong></span>
+              <span>$5: <strong id="stock-b5">40</strong></span>
+            </div>
+            <div class="admin-cash-row" style="margin-top: 8px;">
+              <span class="cash-display">$<span id="efectivo-cajero-display">1000.00</span></span>
+            </div>
+            <div class="admin-recarga-billetes" style="margin-top: 6px; display: flex; gap: 4px;">
+              <input type="number" id="recarga-b20" placeholder="Cant $20" style="width: 32%;">
+              <input type="number" id="recarga-b10" placeholder="Cant $10" style="width: 32%;">
+              <input type="number" id="recarga-b5" placeholder="Cant $5" style="width: 32%;">
+            </div>
+            <button onclick="rellenarCajeroBilletes()" class="btn-adm-primary w-100" style="margin-top: 6px;">RECARGAR CAJERO</button>
+          </div>
+        </div>
+
+        <div class="admin-card-item" style="margin-top: 10px;">
+          <h4>PROYECCIÓN DE FLUJO</h4>
+          <div class="chart-box-compact">
+            <canvas id="graficaEfectivoCanvas"></canvas>
+          </div>
+          <p id="proyeccion-agotamiento" class="txt-resultado-admin"></p>
+        </div>
+
+        <div class="admin-card-item" style="margin-top: 10px;">
+          <div class="admin-table-header">
+            <h4>REGISTRO DE CLIENTES</h4>
+            <button type="button" onclick="limpiarMemoria()" class="btn-adm-danger">BORRAR</button>
+          </div>
+          <div class="table-scroll-container">
+            <table>
+              <thead>
+                <tr>
+                  <th>CÉDULA</th>
+                  <th>NOMBRE COMPLETO</th>
+                  <th>CORREO ELECTRÓNICO</th>
+                  <th>SALDO ($)</th>
+                </tr>
+              </thead>
+              <tbody id="tabla-body">
+                <tr><td colspan="4" style="text-align: center;">Sin registros. Importe un archivo Excel.</td></tr>
+              </tbody>
+            </table>
+          </div>
+        </div>
+
+        <button onclick="cerrarSesion()" class="btn-adm-danger w-100" style="margin-top: 12px;">CERRAR SESIÓN</button>
+      </div>
+    </div>
+
+    <!-- Pie de página con el banner legal de garantía COSEDE -->
+    <footer class="atm-footer">
+      <div class="cosede-legal-banner">
+        <img src="images/cosede.png" alt="COSEDE Logo" class="cosede-small-logo">
+        <span>Sus depósitos en esta entidad están cubiertos por el Seguro de Depósitos de la <strong>COSEDE</strong>.</span>
+      </div>
+    </footer>
+
   </div>
 
+  <!-- Inclusión de los módulos de JavaScript modularizados en el proyecto -->
+  <script src="config-emailjs.js"></script>
+  <script src="auth.js"></script>
+  <script src="transactions.js"></script>
+  <script src="admin.js"></script>
 </body>
 </html>
