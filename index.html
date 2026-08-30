@@ -29,6 +29,88 @@
         <img src="images/cosede.png" alt="Garantía COSEDE" class="cosede-logo">
       </div>
     </header>
+    <!-- Sección de bloqueo por falta de efectivo o mantenimiento -->
+    <div id="seccion-fuera-servicio" class="seccion-atm hidden">
+      <div class="atm-split-layout">
+        <div class="video-container-left-clean">
+          <video autoplay loop controls muted class="atm-video-fullscreen">
+            <source src="video/mantenimiento.mp4" type="video/mp4">
+          </video>
+        </div>
+        <div class="panel-right-action">
+          <h2>MANTENIMIENTO</h2>
+          <p class="panel-subtitle">Ingrese PIN de administrador:</p>
+          <input type="password" id="input-admin-maintenance" class="atm-input-display" placeholder="PIN" readonly>
+          <div class="keypad-grid">
+            <button class="key-btn" onclick="digitarNumpad('input-admin-maintenance', '1')">1</button>
+            <button class="key-btn" onclick="digitarNumpad('input-admin-maintenance', '2')">2</button>
+            <button class="key-btn" onclick="digitarNumpad('input-admin-maintenance', '3')">3</button>
+            <button class="key-btn" onclick="digitarNumpad('input-admin-maintenance', '4')">4</button>
+            <button class="key-btn" onclick="digitarNumpad('input-admin-maintenance', '5')">5</button>
+            <button class="key-btn" onclick="digitarNumpad('input-admin-maintenance', '6')">6</button>
+            <button class="key-btn" onclick="digitarNumpad('input-admin-maintenance', '7')">7</button>
+            <button class="key-btn" onclick="digitarNumpad('input-admin-maintenance', '8')">8</button>
+            <button class="key-btn" onclick="digitarNumpad('input-admin-maintenance', '9')">9</button>
+            <button class="key-btn key-clear" onclick="borrarNumpad('input-admin-maintenance')">BORRAR</button>
+            <button class="key-btn" onclick="digitarNumpad('input-admin-maintenance', '0')">0</button>
+            <button class="key-btn key-submit" onclick="validarAdminMaintenance()">ENTRAR</button>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Sección de identificación inicial del cliente mediante número de cédula -->
+    <div id="seccion-login" class="seccion-atm">
+      <div class="atm-split-layout">
+        <div class="video-container-left-clean">
+          <video autoplay loop controls muted class="atm-video-fullscreen">
+            <source src="video/login.mp4" type="video/mp4">
+          </video>
+        </div>
+        <div class="panel-right-action">
+          <h2>IDENTIFICACIÓN</h2>
+          <p class="panel-subtitle">Ingrese su número de cédula:</p>
+          <input type="text" id="login-cedula" class="atm-input-display" placeholder="Cédula / PIN" readonly>
+          <div class="keypad-grid">
+            <button class="key-btn" onclick="digitarNumpad('login-cedula', '1')">1</button>
+            <button class="key-btn" onclick="digitarNumpad('login-cedula', '2')">2</button>
+            <button class="key-btn" onclick="digitarNumpad('login-cedula', '3')">3</button>
+            <button class="key-btn" onclick="digitarNumpad('login-cedula', '4')">4</button>
+            <button class="key-btn" onclick="digitarNumpad('login-cedula', '5')">5</button>
+            <button class="key-btn" onclick="digitarNumpad('login-cedula', '6')">6</button>
+            <button class="key-btn" onclick="digitarNumpad('login-cedula', '7')">7</button>
+            <button class="key-btn" onclick="digitarNumpad('login-cedula', '8')">8</button>
+            <button class="key-btn" onclick="digitarNumpad('login-cedula', '9')">9</button>
+            <button class="key-btn key-clear" onclick="borrarNumpad('login-cedula')">BORRAR</button>
+            <button class="key-btn" onclick="digitarNumpad('login-cedula', '0')">0</button>
+            <button class="key-btn key-submit" onclick="solicitarOTPCedula()">CONTINUAR</button>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Sección para la validación del código OTP de seguridad -->
+    <div id="seccion-otp" class="seccion-atm hidden">
+      <div class="panel-center-standalone">
+        <h2>VALIDACIÓN OTP</h2>
+        <p class="panel-subtitle">Ingrese el código de 6 dígitos enviado a su correo:</p>
+        <input type="text" id="input-otp" class="atm-input-display" placeholder="000000" readonly>
+        <div class="keypad-grid" style="max-width: 320px; margin: 0 auto;">
+          <button class="key-btn" onclick="digitarNumpad('input-otp', '1')">1</button>
+          <button class="key-btn" onclick="digitarNumpad('input-otp', '2')">2</button>
+          <button class="key-btn" onclick="digitarNumpad('input-otp', '3')">3</button>
+          <button class="key-btn" onclick="digitarNumpad('input-otp', '4')">4</button>
+          <button class="key-btn" onclick="digitarNumpad('input-otp', '5')">5</button>
+          <button class="key-btn" onclick="digitarNumpad('input-otp', '6')">6</button>
+          <button class="key-btn" onclick="digitarNumpad('input-otp', '7')">7</button>
+          <button class="key-btn" onclick="digitarNumpad('input-otp', '8')">8</button>
+          <button class="key-btn" onclick="digitarNumpad('input-otp', '9')">9</button>
+          <button class="key-btn key-clear" onclick="borrarNumpad('input-otp')">BORRAR</button>
+          <button class="key-btn" onclick="digitarNumpad('input-otp', '0')">0</button>
+          <button class="key-btn key-submit" onclick="verificarOTP()">VALIDAR</button>
+        </div>
+      </div>
+    </div>
 
   </div>
 
